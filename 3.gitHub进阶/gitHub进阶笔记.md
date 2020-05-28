@@ -710,4 +710,206 @@ project.txt
 
 ### git分支
 
-> 
+> 分支之间并行开发，互不影响
+>
+> 可能会导致分支的滥用
+>
+> > 无法判断分支之间的关系，无法区分主干分支
+
+##### 分支指令
+
+###### 创建分支
+
+> `git branch foo`
+>
+> > `(master)git branch iss53`
+> >
+> > > 为master创建名为iss53的分支
+
+###### 进入分支
+
+> `git checkout foo`
+>
+> > `git checkout iss53`
+> >
+> > > 进入iss53分支
+>
+> `git checkout -b foo`
+>
+> > 创建分支并进入
+
+###### 合并分支
+
+> `git merge foo`
+>
+> > `git merge hotfix`
+> >
+> > > 将hotfix分支合并到master分支中
+
+###### 修改分支名字
+
+> `git branch -m old_name newname`
+>
+> `git branch -M old_name newname
+
+###### 删除分支
+
+> `git branch -d hotfix`
+>
+> `git branch -D hotfix`
+
+###### 查看分支列表
+
+> `git branch`
+>
+> > 查看分支列表
+>
+> `git branch -r`
+>
+> > 列出远程分支
+>
+> `git branch -v`
+>
+> > 列出分支的名称，版本hash和message
+>
+> `git branch --merged`
+>
+> > 查看已合并的分支
+>
+> `git branch --no-merged`
+>
+> > 查看没有合并的分支
+>
+> `git branch -r -merged`
+>
+> > 列出远程合并的分支
+
+###### 取出远程foo分支
+
+> `git checkout -t origin/goo`
+
+###### 推送分支到远程
+
+> `git push -u origin <space>:<remote branch>`
+>
+> > `(foo)git push -u origin iss53`
+> >
+> > > 将iss53分支，推送到远程iss53上
+
+###### 合并分支
+
+> `git merge foo`
+
+
+
+##### 分支示例详解
+
+> `(master)git branch iss53`		--C2
+>
+> > 在master创建了一个新的分支（iss53）
+> >
+> > > iss53没有进行提交，iss53分支指针指向C2
+> >
+> > `(iss53)git commit`		--C3
+> >
+> > > 此时iss53分支指针指向C3
+>
+> `(master)git branch hotfix`	--C2
+>
+> > 在master创建了一个新的分支hotfix
+> >
+> > > hotfix没有提交，hotfix分支指针指向C2
+> >
+> > `(hotfix)git commit`	--C4
+> >
+> > > 此时hotfix分支指针指向C4
+>
+> `(master)git merge hotfix`		--master合并hotfix分支，master指针指向C4
+>
+> > 此时master的指针指向hotfix分支的提交(C4)
+> >
+> > > hotfix分支被master分支合并
+>
+> `(iss53)git commit`	--C5
+>
+> > 此时iss53分支的指针指向C5
+>
+> `(master)git merge iss53`	--master的C4和iss53分支的C5，合并为C6
+>
+> > master分支合并iss53分支
+> >
+> > 此时master指针指向C6
+> >
+> > > C6有两个parent：C4和C5
+
+##### 冲突解决
+
+###### 场景
+
+> 1.在不同分支上修改同一文件
+>
+> 2.不同的人，修改了同一个文件
+>
+> 3.不同的仓库，修改了同一个文件
+>
+> > 冲突只在合并分支的时候才发生
+> >
+> > 冲突发生时，冲突的代码不会丢失
+>
+> > 解决冲突，重新提交，commit时不要给message
+
+###### 冲突信息的格式
+
+冲突信息
+
+> 发生冲突的是master的HEAD，`=======`上面为`master`版本，下面为`iss53`版本
+
+```
+<<<<<<< HEAD
+aaa--master
+=======
+aaac==iss53
+>>>>>>> iss53
+2222
+2222
+```
+
+修改冲突
+
+> 保留maste或者iss53其中一个版本，或者重新修改
+
+```
+1111--master and iss53
+2222
+2222
+```
+
+
+
+##### `git stash`
+
+> 将工作进度放入暂存区
+>
+> > 如果工作完成未提交，不可以切换进入别的分支
+> >
+> > 可以将当前完成的工作放入暂存区中
+
+###### 保存进度
+
+> `git stash`
+>
+> > 将当前分支的工作进度保存进暂存区
+
+###### 弹出进度
+
+> `git stash pop`
+>
+> > 弹出暂存区中的工作进度
+
+###### 查看stash列表
+
+> `git stash list`
+
+###### 删除stash列表
+
+> `git stash clear`
