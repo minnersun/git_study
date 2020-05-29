@@ -792,6 +792,8 @@ project.txt
 
 > `git push -u origin <space>:<remote branch>`
 >
+> > `-u`：建立本地仓库与远程的关联关系，建立后`git push`即推送到默认的远程仓库
+>
 > > `(foo)git push -u origin iss53`
 > >
 > > > 将iss53分支，推送到远程iss53上
