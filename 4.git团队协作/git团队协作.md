@@ -172,7 +172,7 @@
 >
 > 3.增加与官方的远程连接
 >
-> 4.拖拽远程仓库边动代码
+> 4.拖拽远程仓库变动代码
 >
 > > 为了与远程仓库代码同步
 >
@@ -182,3 +182,166 @@
 >
 > > 确保自己的代码无误
 
+#### 案例介绍
+
+###### 查看仓库是否有协作者
+
+> 登录github --> 打开对应仓库 --> Settings --> Manage access
+>
+> > 如果有**协作者的话删除**
+
+##### 步骤
+
+###### 1.在master分支上操作
+
+> 在仓库中新建一个目录，并在目录中创建文件
+>
+> > （minnersun）
+> >
+> > > `mkdir say-hello`
+> > >
+> > > > `cd say-hello`
+> > > >
+> > > > > `touch minnersun.md`
+> > > > >
+> > > > > > `echo "Hello everyone. I am minnersun" >> minnersun.md`
+> > > > >
+> > > > > `git add *`
+> > > > >
+> > > > > `git commit -m "docs(say-hello/):add minnersun.md"`
+> > > > >
+> > > > > `git push origin`
+> >
+> > (mytest-2)
+> >
+> > > 打开到minnersun仓库的位置，点击**fork**
+> > >
+> > > > 本地：`git clone git@github.com:mytest-1/test.git`
+> > > >
+> > > > > `cd say-hello`
+> > > > >
+> > > > > > `touch mytest-2.md`
+> > > > > >
+> > > > > > > `echo "Hello everyone. I am mytest2" >> mytest-2.md`
+> > > > >
+> > > > > `git add *`
+> > > > >
+> > > > > `git commit -m "docs(say-hello/):add mytest-2.md"`
+> > > > >
+> > > > > `git push origin`
+> >
+> > > 打开mytest-2的仓库
+> > >
+> > > > `Pull request --> new pull Request`
+> > > >
+> > > > > `Create pull request`
+> >
+> > (minnersun)
+> >
+> > > 登录github
+> > >
+> > > > `Pull Request --> Merge pull request -->  commit merge`
+> > > >
+> > > > > 合并成功
+> >
+> > > 打开本地仓库
+> > >
+> > > > `echo 444 >> minnersun.md`
+> > > >
+> > > > `git commit -am "444"`
+> > >
+> > > > `git pull --rebase`
+> > > >
+> > > > `git push origin`
+> >
+> > (mytest-2)
+> >
+> > > `git remote add upstream git@github.com:minnersun/test.git`
+> > >
+> > > > 添加仓库的远程连接
+> > >
+> > > `git pull upstream master`
+> > >
+> > > > 将官方仓库的变化更新到本地仓库
+
+###### 2.多分支操作
+
+> (mytest-2)
+>
+> > 打开**本地仓库**	-- 建立分支，添加功能
+> >
+> > > `(master)git checkout -b feat-menu`
+> > >
+> > > > 创建`feat-menu`分支并进入
+> > >
+> > > `(feat-menu)touch menu `
+> > >
+> > > `(feat-menu)git add *`
+> > >
+> > > `(feat-menu)git commit -m "add menu"`
+> > >
+> > > `(feat-menu)git push -u origin feat-menu`
+> > >
+> > > > `-u`：建立本地仓库与远程的关联关系，建立后`git push`即推送到默认的远程仓库
+>
+> > 登录**github**	-- pull request 申请合并
+> >
+> > > 进入修改的仓库
+> > >
+> > > > 点击`Compare and pull request`
+> > > >
+> > > > > 仓库之间的变动会进行比较
+> > > > >
+> > > > > > `Create pull request`
+>
+> > 打开**本地仓库**  -- 开分支修改bug
+> >
+> > > `(feat-menu)git checkout master`
+> > >
+> > > > `(master)git checkout -b hotfix-iss1`
+> > >
+> > > `(hotfix-iss1) cat b`
+> > >
+> > > `(hotfix-iss1)echo 222 >> b`
+> > >
+> > > `(hotfix-iss1)git push -u origin hotfix-iss1`
+>
+> > 登录**github**	-- pull request 申请合并
+> >
+> > > 进入修改的仓库
+> > >
+> > > > 点击`Compare & pull request`
+> > > >
+> > > > > 仓库之间的变动会进行比较
+> > > > >
+> > > > > > `Create pull request`
+>
+> (minnersun)
+>
+> > 打开对应仓库，点击Pull request
+> >
+> > > 根据优先级，点击进入
+> > >
+> > > > 查看代码，点击`Merge pull request`
+
+
+
+
+
+### Pull Request总结
+
+##### pull request的功能
+
+> 1.在仓库中，右上方有一个小眼睛：(Un)watching
+>
+> > 选中Watching
+> >
+> > > 该仓库所有的变更都会发邮件通知
+>
+> 2.可以发起讨论，也可以`code review`
+>
+> 3.将变更并入大目标仓库
+
+##### pull request发生的条件
+
+> `源仓库`与`目标仓库` / `源分支`与`目标分支` 至少有一个不同
