@@ -18,6 +18,26 @@
 >
 > > 选择感兴趣的样式点进去后：点击：`Install with Stalish`
 
+###### 上传样式
+
+> 登录`https://userstyles.org/` -> 点击 `My Account` -> `Create new style`
+>
+> > Name: 样式的名字
+> >
+> > Description: 样式描述
+> >
+> > Additional Info(Optional): 发行说明，版本信息，更改日志，说明等
+> >
+> > CSS: CSS样式代码
+> >
+> > Example URL：能够被样式使用的URL地址
+> >
+> > Primary Screenshot , Additional Screenshots : 上传截图
+> >
+> > License: 选择 `No Redistribution`，即没有任何限制
+
+
+
 
 
 ### CSS讲解(入门)
@@ -95,3 +115,14 @@ div {
 >
 > > 练习css选择器
 
+
+
+### 案例实战
+
+##### 百度脑图
+
+> `https://naotu.baidu.com/`
+
+```
+
+```
